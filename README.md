@@ -41,6 +41,3 @@ The sky itself is alive with gradients, twinkling stars, and emergent clusters.
 
 ---
 Built with gleam by Aya
-
-# Start development server
-npm start

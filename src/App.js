@@ -1,21 +1,23 @@
-import { useAuth } from "./context/AuthContext";
+// src/App.js
+
+import React from "react";
+import { AuthProvider } from "./context/AuthContext";
+import { TagProvider } from "./context/TagContext";
+import TagSideBar from "./components/TagSideBar";
 import GalaxyCanvas from "./components/GalaxyCanvas";
 import AddStarForm from "./components/AddStarForm";
-import AuthForm from "./components/AuthForm";
-import "./App.css";
+import ConstellationToggle from "./components/ConstellationToggle";
 
 function App() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div style={{ color: "white" }}>Loading your galaxy...</div>;
-  }
-
   return (
-    <>
-      <GalaxyCanvas />
-      {user ? <AddStarForm /> : <AuthForm />}
-    </>
+    <AuthProvider>
+      <TagProvider>
+        <TagSideBar />
+        <GalaxyCanvas />
+        <AddStarForm />
+        <ConstellationToggle /> 
+      </TagProvider>
+    </AuthProvider>
   );
 }
 

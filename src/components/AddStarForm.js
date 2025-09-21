@@ -7,7 +7,7 @@ export default function AddStarForm() {
   const [text, setText] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const [open, setOpen] = useState(false);
-  const user = useAuth();
+  const { user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,13 +23,13 @@ export default function AddStarForm() {
     };
 
     await push(ref(db, `users/${user.uid}/stars`), star);
+    console.log("Planted star:", star);
     setText("");
     setOpen(false);
   };
 
   return (
     <>
-      {/* Floating Star Button */}
       <button
         onClick={() => setOpen(!open)}
         style={{
@@ -50,7 +50,6 @@ export default function AddStarForm() {
         ⭐
       </button>
 
-      {/*  Form */}
       {open && (
         <form
           onSubmit={handleSubmit}
@@ -67,68 +66,48 @@ export default function AddStarForm() {
             border: "1px solid rgba(255, 255, 255, 0.2)",
             boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
             color: "white",
-            zIndex: 30,
-            animation: "fadeInUp 0.3s ease"
+            zIndex: 30
           }}
         >
-          {/* Textarea */}
-        <textarea
-        value={text}
-        onChange={(e) => {
-            setText(e.target.value);
-            const el = e.target;
-            el.style.height = "12px"; 
-            el.style.height = Math.min(el.scrollHeight, 120) + "px"; 
-        }}
-        placeholder="Plant a memory..."
-        style={{
-            width: "95%",
-            minHeight: "12px",        
-            maxHeight: "120px",      
-            padding: "0.5rem",
-            border: "none",
-            outline: "none",
-            background: "none",
-            borderRadius: "8px",
-            color: "white",
-            resize: "none",
-            overflowY: "auto",       
-            scrollbarWidth: "none"   
-        }}
-        />
-
-
-         {/* Action Row */}
-            <div
-            style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginTop: "1rem"
+          <textarea
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+              const el = e.target;
+              el.style.height = "12px";
+              el.style.height = Math.min(el.scrollHeight, 120) + "px";
             }}
-            >
-            {/* Toggle Public/Private */}
+            placeholder="Plant a memory..."
+            style={{
+              width: "95%",
+              minHeight: "12px",
+              maxHeight: "120px",
+              padding: "0.5rem",
+              border: "none",
+              outline: "none",
+              background: "none",
+              borderRadius: "8px",
+              color: "white",
+              resize: "none",
+              overflowY: "auto",
+              scrollbarWidth: "none"
+            }}
+          />
+
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "1rem" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
-                <span style={{ marginRight: "0.5rem", fontSize: "0.9rem" }}>
+              <span style={{ marginRight: "0.5rem", fontSize: "0.9rem" }}>
                 {isPublic ? "🔭 Public" : "🔒 Private"}
-                </span>
-                <label
-                style={{
-                    position: "relative",
-                    display: "inline-block",
-                    width: "50px",
-                    height: "24px",
-                    marginRight: "1rem"
-                }}
-                >
+              </span>
+              <label style={{ position: "relative", display: "inline-block", width: "50px", height: "24px" }}>
                 <input
-                    type="checkbox"
-                    checked={isPublic}
-                    onChange={(e) => setIsPublic(e.target.checked)}
-                    style={{ opacity: 0, width: 0, height: 0 }}
+                  type="checkbox"
+                  checked={isPublic}
+                  onChange={(e) => setIsPublic(e.target.checked)}
+                  style={{ opacity: 0, width: 0, height: 0 }}
                 />
                 <span
-                    style={{
+                  style={{
                     position: "absolute",
                     cursor: "pointer",
                     top: 0,
@@ -138,10 +117,10 @@ export default function AddStarForm() {
                     backgroundColor: isPublic ? "#4ade80" : "#f87171",
                     transition: ".4s",
                     borderRadius: "24px"
-                    }}
+                  }}
                 />
                 <span
-                    style={{
+                  style={{
                     position: "absolute",
                     height: "18px",
                     width: "18px",
@@ -150,29 +129,27 @@ export default function AddStarForm() {
                     backgroundColor: "white",
                     borderRadius: "50%",
                     transition: ".4s"
-                    }}
+                  }}
                 />
-                </label>
+              </label>
             </div>
 
-                {/* Submit button */}
-                <button
-                    type="submit"
-                    style={{
-                    background: "linear-gradient(135deg, #ffd700, #ff9d00)",
-                    border: "none",
-                    padding: "0.6rem 1.2rem",
-                    borderRadius: "45px",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                    color: "#222",
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.3)"
-                    }}
-                >
-                    Plant Star
-                </button>
-            </div>
-
+            <button
+              type="submit"
+              style={{
+                background: "linear-gradient(135deg, #ffd700, #ff9d00)",
+                border: "none",
+                padding: "0.6rem 1.2rem",
+                borderRadius: "45px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                color: "#222",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.3)"
+              }}
+            >
+              Plant Star
+            </button>
+          </div>
         </form>
       )}
     </>

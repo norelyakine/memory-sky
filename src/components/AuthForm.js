@@ -22,7 +22,7 @@ export default function AuthForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ color: "white" }}>
       <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
       <button type="submit">{isSignup ? "Sign Up" : "Login"}</button>

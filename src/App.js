@@ -1,23 +1,21 @@
 import { useAuth } from "./context/AuthContext";
-import AuthForm from "./components/AuthForm";
-import AddStarForm from "./components/AddStarForm";
 import GalaxyCanvas from "./components/GalaxyCanvas";
+import AddStarForm from "./components/AddStarForm";
+import AuthForm from "./components/AuthForm";
+import "./App.css";
 
 function App() {
-  const user = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div style={{ color: "white" }}>Loading your galaxy...</div>;
+  }
 
   return (
-    <div>
-      <h1>Memory Sky</h1>
-      {!user ? (
-        <AuthForm />
-      ) : (
-        <>
-          <AddStarForm />
-          <GalaxyCanvas />
-        </>
-      )}
-    </div>
+    <>
+      <GalaxyCanvas />
+      {user ? <AddStarForm /> : <AuthForm />}
+    </>
   );
 }
 
